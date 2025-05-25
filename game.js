@@ -2,6 +2,11 @@ let tor = "x";
 let title = document.querySelector('.fold span');
 let boxes = [];
 
+let playerMoves = {
+    x: [],
+    o: []
+};
+
 function wener() {
     for (let i = 1; i <= 9; i++) {
         boxes[i] = document.getElementById('cell' + i).innerHTML;
@@ -27,6 +32,14 @@ function game(id) {
     let box = document.getElementById(id);
     if (box.innerHTML === "") {
         box.innerHTML = tor;
+
+        playerMoves[tor].push(id);
+
+        if (playerMoves[tor].length > 4) {
+            let oldId = playerMoves[tor].shift();
+            document.getElementById(oldId).innerHTML = "";
+        }
+
         tor = (tor === "x") ? "o" : "x";
         title.innerHTML = `Turn: ${tor.toUpperCase()}`;
         wener();
